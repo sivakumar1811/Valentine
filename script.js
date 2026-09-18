@@ -1,53 +1,80 @@
-```javascript
-let currentFrame = 1;
+let currentFrame = 0;
+
+const frames = document.querySelectorAll(".frame");
+
+frames[0].classList.add("active");
+
+function showFrame(index) {
+
+    frames.forEach(frame => {
+        frame.classList.remove("active");
+    });
+
+    frames[index].classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    createLoveBurst();
+}
 
 function nextFrame() {
 
-    document.getElementById("frame" + currentFrame)
-        .classList.remove("active");
-
     currentFrame++;
 
-    document.getElementById("frame" + currentFrame)
-        .classList.add("active");
+    if (currentFrame >= frames.length) {
+        currentFrame = 0;
+    }
+
+    showFrame(currentFrame);
 }
 
-function restart() {
 
-    document.getElementById("frame" + currentFrame)
-        .classList.remove("active");
+function createLoveBurst() {
 
-    currentFrame = 1;
+    const symbols = ["♡", "♥", "💙", "✨", "🐼"];
 
-    document.getElementById("frame1")
-        .classList.add("active");
+    for (let i = 0; i < 18; i++) {
+
+        const item = document.createElement("div");
+
+        item.innerHTML =
+            symbols[Math.floor(Math.random() * symbols.length)];
+
+        item.style.position = "fixed";
+        item.style.left = "50%";
+        item.style.top = "50%";
+        item.style.zIndex = "9999";
+        item.style.pointerEvents = "none";
+        item.style.fontSize =
+            Math.floor(Math.random() * 20 + 15) + "px";
+
+        item.style.transition =
+            "transform 1.8s ease, opacity 1.8s ease";
+
+        document.body.appendChild(item);
+
+        const x =
+            (Math.random() - 0.5) * window.innerWidth;
+
+        const y =
+            (Math.random() - 0.5) * window.innerHeight;
+
+        setTimeout(() => {
+
+            item.style.transform =
+                `translate(${x}px, ${y}px) rotate(${Math.random() * 360}deg)`;
+
+            item.style.opacity = "0";
+
+        }, 50);
+
+        setTimeout(() => {
+
+            item.remove();
+
+        }, 1900);
+    }
 }
-
-function createHeart() {
-
-    const heart = document.createElement("div");
-
-    heart.classList.add("floating-heart");
-
-    const symbols = ["❤️", "💕", "💗", "💖", "💘", "♥"];
-
-    heart.innerHTML =
-        symbols[Math.floor(Math.random() * symbols.length)];
-
-    heart.style.left = Math.random() * 100 + "%";
-
-    heart.style.animationDuration =
-        (4 + Math.random() * 5) + "s";
-
-    heart.style.fontSize =
-        (15 + Math.random() * 25) + "px";
-
-    document.querySelector(".hearts").appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 9000);
-}
-
-setInterval(createHeart, 500);
-```
