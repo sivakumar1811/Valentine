@@ -1,164 +1,509 @@
-```css
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ffd6e7, #fff0f6, #ffe0ec);
-    min-height: 100vh;
-    overflow: hidden;
-    color: #5a2635;
+html {
+    scroll-behavior: smooth;
 }
 
-.frame {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transform: scale(1.1);
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: #06152e;
+    color: white;
+    overflow-x: hidden;
+}
+
+
+/* BACKGROUND */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(45, 137, 255, .25), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(78, 192, 255, .2), transparent 30%),
+        radial-gradient(circle at 50% 80%, rgba(30, 82, 180, .3), transparent 35%);
     pointer-events: none;
-    transition: all 0.8s ease;
+    z-index: -3;
+}
+
+
+/* STARS */
+
+.stars {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image:
+        radial-gradient(circle, white 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,.7) 1px, transparent 1px),
+        radial-gradient(circle, rgba(100,190,255,.8) 1px, transparent 1px);
+
+    background-size:
+        90px 90px,
+        140px 140px,
+        200px 200px;
+
+    animation: starMove 25s linear infinite;
+}
+
+@keyframes starMove {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100px);
+    }
+}
+
+
+/* FLOATING HEARTS */
+
+.hearts span {
+    position: fixed;
+    bottom: -50px;
+    font-size: 22px;
+    color: #73c8ff;
+    opacity: .45;
+    pointer-events: none;
+    z-index: 2;
+    animation: floatHeart 12s linear infinite;
+}
+
+.hearts span:nth-child(1) {
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.hearts span:nth-child(2) {
+    left: 17%;
+    animation-delay: 4s;
+}
+
+.hearts span:nth-child(3) {
+    left: 32%;
+    animation-delay: 7s;
+}
+
+.hearts span:nth-child(4) {
+    left: 48%;
+    animation-delay: 2s;
+}
+
+.hearts span:nth-child(5) {
+    left: 65%;
+    animation-delay: 6s;
+}
+
+.hearts span:nth-child(6) {
+    left: 76%;
+    animation-delay: 3s;
+}
+
+.hearts span:nth-child(7) {
+    left: 88%;
+    animation-delay: 8s;
+}
+
+.hearts span:nth-child(8) {
+    left: 95%;
+    animation-delay: 5s;
+}
+
+@keyframes floatHeart {
+
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: .5;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+
+/* GENERAL FRAME */
+
+.frame {
+    min-height: 100vh;
+    width: 100%;
+    padding: 70px 20px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
 }
 
 .frame.active {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: all;
+    display: flex;
+    animation: appear .8s ease;
 }
 
-.card {
-    width: 90%;
-    max-width: 600px;
-    padding: 45px 30px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.82);
-    border-radius: 30px;
-    box-shadow: 0 20px 60px rgba(180, 60, 100, 0.25);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    animation: float 4s ease-in-out infinite;
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.panda {
-    font-size: 75px;
-    margin-bottom: 15px;
-    animation: bounce 2s infinite;
+
+/* FRAME 1 */
+
+.first {
+    background:
+        radial-gradient(circle at center, rgba(17, 72, 145, .25), transparent 60%);
+}
+
+.top-love {
+    color: #72caff;
+    font-size: 24px;
+    letter-spacing: 10px;
+    margin-bottom: 25px;
+}
+
+.tiny {
+    color: #8fcfff;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-bottom: 20px;
 }
 
 h1 {
-    font-size: 38px;
-    color: #e6396b;
-    margin-bottom: 20px;
+    font-size: clamp(50px, 9vw, 90px);
+    font-weight: 400;
+    line-height: .95;
 }
 
-h2 {
-    font-size: 28px;
-    color: #d62858;
-    margin: 15px 0;
-}
-
-p {
-    font-size: 18px;
-    line-height: 1.7;
-    margin: 15px 0;
-}
-
-.subtitle {
-    font-size: 20px;
-    color: #8d5264;
-}
-
-.heart {
-    font-size: 75px;
-    color: #ff3864;
-    animation: heartbeat 1.2s infinite;
-}
-
-.love-symbols {
-    font-size: 32px;
-    margin: 25px 0;
-    letter-spacing: 8px;
-}
-
-.lights {
-    font-size: 45px;
-    margin-bottom: 20px;
-    animation: glow 1.5s infinite alternate;
-}
-
-button {
-    border: none;
-    outline: none;
-    margin-top: 25px;
-    padding: 15px 30px;
-    border-radius: 50px;
-    background: linear-gradient(135deg, #ff477e, #e91e63);
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);
-    transition: 0.3s;
-}
-
-button:hover {
-    transform: scale(1.08);
-    box-shadow: 0 12px 30px rgba(233, 30, 99, 0.4);
-}
-
-.big-love {
-    font-size: 28px;
-    font-weight: bold;
-    color: #e6396b;
-}
-
-.final-message {
-    font-size: 19px;
-}
-
-.signature {
-    margin-top: 25px;
-    font-size: 18px;
+h1 span {
+    display: block;
+    color: #69c8ff;
     font-style: italic;
+    text-shadow:
+        0 0 15px rgba(80,190,255,.7),
+        0 0 40px rgba(80,190,255,.3);
 }
 
-.signature span {
-    color: #e6396b;
-    font-weight: bold;
+
+/* PANDA */
+
+.panda-box {
+    margin: 30px 0;
 }
 
-.hearts {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
+.panda {
+    width: 230px;
+    height: 270px;
+    position: relative;
 }
 
-.floating-heart {
+.panda-head {
     position: absolute;
-    bottom: -30px;
-    font-size: 22px;
-    animation: rise linear forwards;
+    width: 180px;
+    height: 165px;
+    background: white;
+    border-radius: 50%;
+    left: 25px;
+    top: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.3);
+    z-index: 2;
 }
 
-@keyframes heartbeat {
+.ear {
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    background: #101820;
+    border-radius: 50%;
+    top: 10px;
+}
+
+.e1 {
+    left: 20px;
+}
+
+.e2 {
+    right: 20px;
+}
+
+.eye {
+    position: absolute;
+    width: 42px;
+    height: 62px;
+    background: #101820;
+    border-radius: 50%;
+    top: 48px;
+}
+
+.eye1 {
+    left: 30px;
+    transform: rotate(35deg);
+}
+
+.eye2 {
+    right: 30px;
+    transform: rotate(-35deg);
+}
+
+.eye::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    top: 10px;
+    left: 12px;
+}
+
+.nose {
+    position: absolute;
+    width: 18px;
+    height: 13px;
+    background: #101820;
+    border-radius: 50%;
+    left: 81px;
+    top: 108px;
+}
+
+.smile {
+    position: absolute;
+    width: 30px;
+    height: 14px;
+    border-bottom: 3px solid #101820;
+    border-radius: 50%;
+    left: 75px;
+    top: 118px;
+}
+
+.cheek {
+    position: absolute;
+    width: 25px;
+    height: 12px;
+    border-radius: 50%;
+    background: #76cfff;
+    opacity: .65;
+    top: 110px;
+}
+
+.c1 {
+    left: 20px;
+}
+
+.c2 {
+    right: 20px;
+}
+
+.panda-body {
+    position: absolute;
+    width: 175px;
+    height: 135px;
+    background: #101820;
+    left: 28px;
+    top: 150px;
+    border-radius: 50px;
+}
+
+.arm {
+    position: absolute;
+    width: 60px;
+    height: 95px;
+    background: #101820;
+    border-radius: 50%;
+    top: 5px;
+}
+
+.a1 {
+    left: -25px;
+    transform: rotate(25deg);
+}
+
+.a2 {
+    right: -25px;
+    transform: rotate(-25deg);
+}
+
+.big-heart {
+    position: absolute;
+    color: #4dbdff;
+    font-size: 68px;
+    left: 53px;
+    top: 30px;
+    animation: beat 1.5s infinite;
+    text-shadow:
+        0 0 15px #39b5ff,
+        0 0 35px rgba(39,170,255,.7);
+}
+
+@keyframes beat {
+
     0%, 100% {
         transform: scale(1);
     }
 
     50% {
-        transform: scale(1.25);
+        transform: scale(1.15);
     }
 }
 
-@keyframes bounce {
+.first h2 {
+    font-size: 30px;
+    color: #c7eaff;
+    margin: 10px 0;
+}
+
+.intro {
+    max-width: 550px;
+    color: #9bbbd5;
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 10px 0 25px;
+}
+
+
+/* BUTTON */
+
+button {
+    border: 1px solid rgba(104,200,255,.5);
+    background: linear-gradient(135deg, #1261a0, #168bd0);
+    color: white;
+    border-radius: 50px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow:
+        0 0 20px rgba(55,180,255,.25),
+        0 10px 30px rgba(0,0,0,.3);
+    transition: .3s;
+}
+
+button:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow:
+        0 0 30px rgba(55,180,255,.5),
+        0 15px 35px rgba(0,0,0,.4);
+}
+
+
+/* FRAME 2 */
+
+.second {
+    background:
+        radial-gradient(circle at 50% 50%, rgba(20,100,180,.25), transparent 60%);
+}
+
+.letter {
+    width: min(680px, 95%);
+    padding: 50px 45px;
+    background: rgba(9, 32, 65, .8);
+    border: 1px solid rgba(100,190,255,.25);
+    border-radius: 30px;
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.35),
+        inset 0 0 40px rgba(50,160,255,.05);
+    backdrop-filter: blur(15px);
+}
+
+.letter-decoration {
+    font-size: 25px;
+    letter-spacing: 12px;
+    margin-bottom: 25px;
+}
+
+.hello {
+    color: #70caff;
+    font-size: 30px;
+    font-style: italic;
+    margin-bottom: 25px;
+}
+
+.letter h2 {
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.letter p {
+    color: #abc5da;
+    font-size: 17px;
+    line-height: 1.9;
+    margin: 18px 0;
+}
+
+.letter .highlight {
+    color: #72caff;
+    font-size: 19px;
+}
+
+.divider {
+    color: #5fc3ff;
+    margin: 25px 0;
+    letter-spacing: 5px;
+}
+
+.promise {
+    font-style: italic;
+}
+
+.signature {
+    color: #8bd4ff;
+    font-size: 21px;
+    margin-top: 30px;
+    line-height: 1.6;
+}
+
+
+/* FRAME 3 */
+
+.third {
+    background:
+        radial-gradient(circle at 50% 25%, rgba(24,107,190,.3), transparent 35%);
+}
+
+.moon {
+    font-size: 80px;
+    color: #dff5ff;
+    text-shadow:
+        0 0 20px #8bd8ff,
+        0 0 50px rgba(90,190,255,.5);
+    margin-bottom: 10px;
+}
+
+.final-hearts {
+    color: #65c8ff;
+    font-size: 30px;
+    letter-spacing: 12px;
+    margin-bottom: 25px;
+}
+
+.final-panda {
+    font-size: 90px;
+    margin: 20px 0;
+    filter:
+        drop-shadow(0 0 15px rgba(80,190,255,.4));
+    animation: pandaFloat 3s ease-in-out infinite;
+}
+
+@keyframes pandaFloat {
+
     0%, 100% {
         transform: translateY(0);
     }
@@ -168,62 +513,86 @@ button:hover {
     }
 }
 
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
+.final-card {
+    width: min(650px, 95%);
+    padding: 40px;
+    border-radius: 30px;
+    background: rgba(5, 24, 51, .65);
+    border: 1px solid rgba(110,205,255,.2);
+    backdrop-filter: blur(12px);
 }
 
-@keyframes glow {
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.15);
-    }
+.final-card p {
+    color: #a8c4d8;
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 15px 0;
 }
 
-@keyframes rise {
-    from {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-    }
-
-    to {
-        transform: translateY(-110vh) rotate(360deg);
-        opacity: 0;
-    }
+.final-card h2 {
+    font-size: 38px;
+    color: #76cfff;
+    margin-top: 25px;
 }
+
+.forever {
+    font-size: 75px;
+    color: #65c8ff;
+    text-shadow:
+        0 0 20px #48baff,
+        0 0 50px rgba(40,160,255,.6);
+    margin: 5px;
+}
+
+.final-message {
+    font-style: italic;
+}
+
+.final-card h3 {
+    color: #d9f3ff;
+    font-size: 23px;
+    font-weight: 400;
+    margin-top: 25px;
+}
+
+.bottom-symbols {
+    margin-top: 35px;
+    color: #69c8ff;
+    letter-spacing: 12px;
+    font-size: 22px;
+}
+
+
+/* MOBILE */
 
 @media (max-width: 600px) {
 
-    .card {
-        padding: 35px 20px;
+    .frame {
+        padding: 50px 15px;
     }
 
     h1 {
-        font-size: 30px;
+        font-size: 48px;
     }
 
-    h2 {
-        font-size: 24px;
+    .letter {
+        padding: 35px 22px;
     }
 
-    p {
+    .letter h2 {
+        font-size: 27px;
+    }
+
+    .letter p {
         font-size: 16px;
     }
 
-    .panda {
-        font-size: 60px;
+    .final-card {
+        padding: 30px 20px;
     }
 
-    .love-symbols {
-        font-size: 25px;
+    .final-card h2 {
+        font-size: 32px;
     }
+
 }
-```
